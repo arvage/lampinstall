@@ -12,6 +12,7 @@ YELLOW='\033[1;33m'
 
 ## Gathering info
 CPU=$(lscpu | grep -i "model name" | cut -d: -f2 | sed 's/ //g')
+MEM=$(lsmem | grep -i "total online memory" | awk '{print $4}')
 IP=$(ifconfig | grep inet | awk '{print $2; exit}')
 HOST=$(hostname)
 
@@ -23,6 +24,7 @@ PHPFILE="/var/www/html/info.php"
 clear; echo -e "${PURPLE}LAMP Installer Script Created by Armin.G 2018\n***** NOTE: This script needs to run under root permission *****${NC}\n\n"
 echo -e "System Info:"
 echo -e "${GREEN}CPU: $CPU"
+echo -e "${GREEN}Memory: $MEM"
 echo -e "${GREEN}Machine IP: $IP"
 echo -e "Hostname: $HOST ${NC}\n"
 echo -e "Checking required services:"
