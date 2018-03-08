@@ -60,8 +60,8 @@ then
     then
     echo -e "${YELLOW}\n\nExited without any changes${NC}"
     else
-        echo -e "${YELLOW}checking for updates"
-        sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y >/dev/null
+        echo -e "${YELLOW}Checking and applying updates..."
+        sudo apt-get update >/dev/null && sudo apt-get dist-upgrade -y >/dev/null && sudo apt-get autoremove -y >/dev/null
         if [ "$apacheinstalled" -eq 0 ]
             then
                 echo -e "${BLUE}Installing Apache"
@@ -72,14 +72,15 @@ then
         fi
         if [ "$mysqlinstalled" -eq 0 ]
             then
-                echo -e "${CYAN}"
-                sudo apt-get install -y mysql-server mysql-client
+                echo -e "${CYAN}Installing MySQL Server"
+                sudo apt-get install -y mysql-server mysql-client >/dev/null
                 echo -e "${NC}"
                 mysqlinstalled=1
         fi
         if [ "$apacheinstalled" -eq 1 ] || [ "$mysqlinstalled" -eq 1 ]
             then
-                sudo apt-get install -y php libapache2-mod-php php-mysql
+                echo -e "${PURPLE}Installing PHP"
+                sudo apt-get install -y php libapache2-mod-php php-mysql >/dev/null
                 sudo service apache2 restart
                 sudo echo "<?php" > $PHPFILE
                 sudo echo "phpinfo();" >> $PHPFILE
