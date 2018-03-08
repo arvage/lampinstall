@@ -104,7 +104,7 @@ then
 			if echo "$wordpressinstall" | grep -iq "^y";
         	then
     			echo -e "${YELLOW}Installing WordPress"
-    	   		wget https://wordpress.org/latest.tar.gz >/dev/null 
+    	   		wget https://wordpress.org/latest.tar.gz
        			tar -xzvf latest.tar.gz >/dev/null
        			sudo rsync -av wordpress/* /var/www/html/ >/dev/null
        			sudo chown -R www-data:www-data /var/www/html/
@@ -131,7 +131,7 @@ read wordpressinstall
 	if echo "$wordpressinstall" | grep -iq "^y";
     then
        	echo -e "${YELLOW}Installing WordPress"
-       	wget https://wordpress.org/latest.tar.gz >/dev/null
+       	wget https://wordpress.org/latest.tar.gz
     	tar -xzvf latest.tar.gz >/dev/null
     	sudo rsync -av wordpress/* /var/www/html/ >/dev/null
     	sudo chown -R www-data:www-data /var/www/html/
