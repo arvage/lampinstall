@@ -111,6 +111,7 @@ then
        			sudo chmod -R 755 /var/www/html/
        			sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
       			sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
+      			mysql -u root -p Abcd@1234 -e "CREATE DATABASE wordpress;GRANT ALL PRIVILEGES ON wp_myblog.* TO 'root'@'localhost' IDENTIFIED BY 'Abcd@1234';FLUSH PRIVILEGES;EXIT;"
 			   	sudo rm /var/www/html/index.html	
       			echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
     		fi
@@ -138,6 +139,7 @@ read wordpressinstall
     	sudo chmod -R 755 /var/www/html/
     	sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
     	sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
+    	mysql -u root -p Abcd@1234 -e "CREATE DATABASE wordpress;GRANT ALL PRIVILEGES ON wp_myblog.* TO 'root'@'localhost' IDENTIFIED BY 'Abcd@1234';FLUSH PRIVILEGES;EXIT;"
     	sudo rm /var/www/html/index.html	
 		echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
 
