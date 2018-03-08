@@ -86,13 +86,13 @@ then
         fi
         if [ "$apacheinstalled" -eq 1 ] || [ "$mysqlinstalled" -eq 1 ]
             then
-                echo -e "${PURPLE}Installing PHP"
+                echo -e "${YELLOW}Installing PHP"
                 sudo apt-get install -y php libapache2-mod-php php-mysql >/dev/null
                 sudo service apache2 restart
                 sudo echo "<?php" > $PHPFILE
                 sudo echo "phpinfo();" >> $PHPFILE
                 sudo echo "?>" >> $PHPFILE
-                echo -e "\n\nYou should be able to browse into ${GREEN}http://$IP/info.php ${NC}now.\n"
+                echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/info.php ${NC}now.\n"
         fi
     fi
 else
