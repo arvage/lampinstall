@@ -109,6 +109,7 @@ then
        					sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
       					sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
     				fi
+    	fi
     fi
 else
 clear; echo -e "${PURPLE}LAMP Installer Script Created by Armin.G 2018\n***** NOTE: This script needs to run under root permission *****${NC}\n\n"
