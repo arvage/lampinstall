@@ -18,8 +18,7 @@ Instructions:
   
   cd lampinstall
   
-  chmod +x lapminstall.sh
-  
+  chmod +x lampinstall.sh  
   
 4- run the script
   
