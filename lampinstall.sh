@@ -127,15 +127,9 @@ echo -e "Memory: $MEM"
 echo -e "Machine IP: $IP"
 echo -e "Hostname: $HOST ${NC}\n"
 echo -e "\n${GREEN}All required applications/services are installed and running\n\n${NC}"
-while true; do
-    				read -p "Do you wish to add WordPress?" yesno
-    				case $yesno in
-        				[Yy]* ) wordpressinstall=1;;
-        				[Nn]* ) wordpressinstall=0;;
-        				* ) echo "Please answer yes or no.";;
-    				esac
-				done
-        if [ "$wordpressinstall" -eq 1]
+echo -n "Do you wish to add WordPress (y/n)?" 
+read wordpressinstall
+if echo "$wordpressinstall" | grep -iq "^y";
         	then
         	wget https://wordpress.org/latest.tar.gz
         	tar -xzvf latest.tar.gz
