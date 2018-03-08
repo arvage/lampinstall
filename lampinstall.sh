@@ -64,7 +64,7 @@ then
     then
     echo -e "${YELLOW}\n\nExited without any changes${NC}"
     else
-        echo -e "${YELLOW}Checking and applying updates..."
+        echo -e "${YELLOW}\nChecking and applying updates..."
         sudo apt-get update >/dev/null && sudo apt-get dist-upgrade -y >/dev/null && sudo apt-get autoremove -y >/dev/null
         echo -e "${NC}"
         if [ "$apacheinstalled" -eq 0 ]
