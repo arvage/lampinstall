@@ -106,7 +106,7 @@ then
     				esac
 				done
         fi
-        if [ wordpressinstall -eq 1]
+        if [ "$wordpressinstall" -eq 1]
         	then
         	wget https://wordpress.org/latest.tar.gz
         	tar -xzvf latest.tar.gz
@@ -135,8 +135,7 @@ while true; do
         				* ) echo "Please answer yes or no.";;
     				esac
 				done
-        fi
-        if [ wordpressinstall -eq 1]
+        if [ "$wordpressinstall" -eq 1]
         	then
         	wget https://wordpress.org/latest.tar.gz
         	tar -xzvf latest.tar.gz
