@@ -75,7 +75,7 @@ then
                 echo -e "${YELLOW}Installing Apache..."
                 sudo apt-get install -y apache2 >/dev/null
                 sudo systemctl enable apache2 >/dev/null 2>&1
-                                echo -e "${NC}"
+                echo -e "Installed${NC}"
                 apacheinstalled=1
 
         fi
@@ -96,8 +96,8 @@ then
                 		echo -e "${YELLOW}Execute the script again"
                 		break
                 fi
-                sudo apt-get install -y mysql-server mysql-client >/dev/null
-                echo -e "${NC}"
+                sudo apt-get install -y mysql-server mysql-client #>/dev/null
+                echo -e "Installed${NC}"
                 mysqlinstalled=1
         fi
         if [ "$apacheinstalled" -eq 1 ] || [ "$mysqlinstalled" -eq 1 ]
