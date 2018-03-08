@@ -3,23 +3,22 @@ This is an automated script to install Apache, Mysql and PHP on Ubuntu 17
 
 Instructions:
 
-
 1- change to root
-  
-  sudo su
-  
-  
+
+sudo su
+
 2- clone the git
-  
-  git clone https://github.com/arvage/lampinstall
-  
-  
+
+git clone https://github.com/arvage/lampinstall
+
 3- go to downloaded directory and make the file executable
-  
-  cd lampinstall
-  
-  chmod +x lampinstall.sh  
-  
+
+cd lampinstall
+
+chmod +x lampinstall.sh  
+
 4- run the script
-  
-  ./lampinstall.sh
+
+./lampinstall.sh
+
+***The MySQL temp root password is Abcd@1234 and you need to change it before going into production.
