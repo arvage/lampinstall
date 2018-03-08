@@ -74,7 +74,7 @@ then
             then
                 echo -e "${YELLOW}Installing Apache"
                 sudo apt-get install -y apache2 >/dev/null
-                sudo systemctl enable apache2 >/dev/null
+                sudo systemctl enable apache2 >/dev/null 2>&1
                                 echo -e "${NC}"
                 apacheinstalled=1
 
@@ -88,8 +88,8 @@ then
 				read rootpassword2
 				if [ "$rootpassword1" == "$rootpassword2" ]
 					then
-                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password "$rootpassword"'
-                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again "$rootpassword"'
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $rootpassword'
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again $rootpassword'
                 	else
                 		echo -e "${YELLOW}Passwords do not match"
                 		echo -e "${YELLOW}Execute the script again"
@@ -103,7 +103,7 @@ then
             then
                 echo -e "${YELLOW}Installing PHP"
                 sudo apt-get install -y php libapache2-mod-php php-mysql >/dev/null
-                sudo service apache2 restart
+                sudo service apache2 restart 
                 sudo echo "<?php" > $PHPFILE
                 sudo echo "phpinfo();" >> $PHPFILE
                 sudo echo "?>" >> $PHPFILE
@@ -115,7 +115,7 @@ then
 			if echo "$wordpressinstall" | grep -iq "^y";
         	then
     			echo -e "${YELLOW}Installing WordPress"
-    	   		wget https://wordpress.org/latest.tar.gz
+    	   		wget https://wordpress.org/latest.tar.gz >/dev/null 2>&1
        			tar -xzvf latest.tar.gz >/dev/null
        			sudo rsync -av wordpress/* /var/www/html/ >/dev/null
        			sudo chown -R www-data:www-data /var/www/html/
