@@ -115,19 +115,20 @@ then
 		read wordpressinstall
 			if echo "$wordpressinstall" | grep -iq "^y";
         	then
-    			echo -e "${YELLOW}Installing WordPress"
+    			echo -e "${YELLOW}Installing WordPress..."
     	   		wget https://wordpress.org/latest.tar.gz >/dev/null 2>&1
        			tar -xzvf latest.tar.gz >/dev/null
        			sudo rsync -av wordpress/* /var/www/html/ >/dev/null
        			sudo chown -R www-data:www-data /var/www/html/
        			sudo chmod -R 755 /var/www/html/
        			sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-      			echo -e "${CYAN}set WordPress DB  password:"
+      			echo -e "${CYAN}set WordPress DB password:"
 		        read wppassword1
         		echo -e "${CYAN}Re-Type the password:"
         		read wppassword2
         		if [ "$wppassword1" == "$wppassword2" ]
         			then
+        				echo -e "${RED}MySQL Root Password?"
         				mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;EXIT;"
         			else
         				echo -e "${RED}Passwords doesn't match\nRe-run the script"
@@ -152,19 +153,20 @@ echo -n "Do you wish to add WordPress (y/n)?"
 read wordpressinstall
 	if echo "$wordpressinstall" | grep -iq "^y";
         then
-    		echo -e "${YELLOW}Installing WordPress"
+    		echo -e "${YELLOW}Installing WordPress..."
     		wget https://wordpress.org/latest.tar.gz >/dev/null 2>&1
        		tar -xzvf latest.tar.gz >/dev/null
        		sudo rsync -av wordpress/* /var/www/html/ >/dev/null
        		sudo chown -R www-data:www-data /var/www/html/
        		sudo chmod -R 755 /var/www/html/
        		sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-      		echo -e "${CYAN}set WordPress DB  password:"
+      		echo -e "${CYAN}set WordPress DB password:"
 			read wppassword1
         	echo -e "${CYAN}Re-Type the password:"
         	read wppassword2
         if [ "$wppassword1" == "$wppassword2" ]
         	then
+        		echo -e "${RED}MySQL Root Password?"
         		mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;EXIT;"
         	else
         		echo -e "${RED}Passwords doesn't match\nRe-run the script"
