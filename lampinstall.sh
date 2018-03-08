@@ -103,7 +103,8 @@ else
 clear; echo -e "${PURPLE}LAMP Installer Script Created by Armin.G 2018\n***** NOTE: This script needs to run under root permission *****${NC}\n\n"
 echo -e "System Info:"
 echo -e "${GREEN}CPU: $CPU"
-echo -e "${GREEN}Machine IP: $IP"
+echo -e "Memory: $MEM"
+echo -e "Machine IP: $IP"
 echo -e "Hostname: $HOST ${NC}\n"
 echo -e "\n${GREEN}All required applications/services are installed and running\n\n${NC}"
 fi
