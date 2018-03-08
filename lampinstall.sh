@@ -93,7 +93,7 @@ then
                 	else
                 		echo -e "${YELLOW}Passwords do not match"
                 		echo -e "${YELLOW}Execute the script again"
-                		break;;
+                		break
                 fi
                 sudo apt-get install -y mysql-server mysql-client >/dev/null
                 echo -e "${NC}"
