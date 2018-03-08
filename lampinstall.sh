@@ -72,7 +72,7 @@ then
         echo -e "${NC}"
         if [ "$apacheinstalled" -eq 0 ]
             then
-                echo -e "${YELLOW}Installing Apache"
+                echo -e "${YELLOW}Installing Apache..."
                 sudo apt-get install -y apache2 >/dev/null
                 sudo systemctl enable apache2 >/dev/null 2>&1
                                 echo -e "${NC}"
@@ -81,15 +81,16 @@ then
         fi
         if [ "$mysqlinstalled" -eq 0 ]
             then
-                echo -e "${YELLOW}Installing MySQL Server"
+                echo -e "${YELLOW}Installing MySQL Server..."
                 echo -e "${YELLOW}Enter new root password:"
                 read rootpassword1
 				echo -e "${YELLOW}Enter root password again:"
 				read rootpassword2
 				if [ "$rootpassword1" == "$rootpassword2" ]
 					then
-                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $rootpassword'
-                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again $rootpassword'
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $rootpassword1'
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $rootpassword2'
+                		echo -e "Installing..."
                 	else
                 		echo -e "${YELLOW}Passwords do not match"
                 		echo -e "${YELLOW}Execute the script again"
