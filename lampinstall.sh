@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 ## setting color values
 RED='\033[0;31m'
 NC='\033[0m'
@@ -75,6 +74,7 @@ then
             then
                 echo -e "${YELLOW}Installing Apache"
                 sudo apt-get install -y apache2 >/dev/null
+                sudo systemctl enable apache2
                 echo -e "${NC}"
                 apacheinstalled=1
 
@@ -97,6 +97,26 @@ then
                 sudo echo "phpinfo();" >> $PHPFILE
                 sudo echo "?>" >> $PHPFILE
                 echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/info.php ${NC}now.\n"
+                while true; do
+    				read -p "Do you wish to add WordPress?" yesno
+    				case $yesno in
+        				[Yy]* ) wordpressinstall=1;;
+        				[Nn]* ) wordpressinstall=0;;
+        				* ) echo "Please answer yes or no.";;
+    				esac
+				done
+        fi
+        if [ wordpressinstall -eq 1]
+        	then
+        	wget https://wordpress.org/latest.tar.gz
+        	tar -xzvf latest.tar.gz
+        	sudo rsync -av wordpress/* /var/www/html/
+        	sudo chown -R www-data:www-data /var/www/html/
+        	sudo chmod -R 755 /var/www/html/
+        	sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+        	sudo sed 's/database_name_here/wordpress/g'  /var/www/html/wp-config.php
+			sudo sed 's/username_here/root/g'  /var/www/html/wp-config.php
+			sudo sed 's/password_here/Abcd@1234/g'  /var/www/html/wp-config.php
         fi
     fi
 else
@@ -107,4 +127,25 @@ echo -e "Memory: $MEM"
 echo -e "Machine IP: $IP"
 echo -e "Hostname: $HOST ${NC}\n"
 echo -e "\n${GREEN}All required applications/services are installed and running\n\n${NC}"
+while true; do
+    				read -p "Do you wish to add WordPress?" yesno
+    				case $yesno in
+        				[Yy]* ) wordpressinstall=1;;
+        				[Nn]* ) wordpressinstall=0;;
+        				* ) echo "Please answer yes or no.";;
+    				esac
+				done
+        fi
+        if [ wordpressinstall -eq 1]
+        	then
+        	wget https://wordpress.org/latest.tar.gz
+        	tar -xzvf latest.tar.gz
+        	sudo rsync -av wordpress/* /var/www/html/
+        	sudo chown -R www-data:www-data /var/www/html/
+        	sudo chmod -R 755 /var/www/html/
+        	sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+        	sudo sed 's/database_name_here/wordpress/g'  /var/www/html/wp-config.php
+			sudo sed 's/username_here/root/g'  /var/www/html/wp-config.php
+			sudo sed 's/password_here/Abcd@1234/g'  /var/www/html/wp-config.php
+        fi
 fi
