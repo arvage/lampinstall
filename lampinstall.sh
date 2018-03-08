@@ -24,6 +24,8 @@ echo -e "System Info:"
 echo -e "${GREEN}Machine IP: $IP"
 echo -e "Hostname: $HOST ${NC}\n"
 echo -e "Checking required services:"
+
+## Display Apache status
 if [ "$APACHE" == "active" ]
 then
 echo -e "${GREEN}Apache installed and running"
@@ -33,6 +35,7 @@ echo -e "${RED}Apache not installed or running"
 apacheinstalled=0
 fi
 
+## Display MySQL status
 if [ "$MYSQL" == "active" ]
 then
 echo -e "${GREEN}MySQL installed and running"
@@ -43,6 +46,7 @@ mysqlinstalled=0
 fi
 echo -e "${NC}"
 
+## Function for on-screen prompt
 promptyn () {
 while true; do
     read -p "$1" yn
@@ -62,9 +66,10 @@ then
     else
         echo -e "${YELLOW}Checking and applying updates..."
         sudo apt-get update >/dev/null && sudo apt-get dist-upgrade -y >/dev/null && sudo apt-get autoremove -y >/dev/null
+        echo -e "${NC}"
         if [ "$apacheinstalled" -eq 0 ]
             then
-                echo -e "${BLUE}Installing Apache"
+                echo -e "${YELLOW}Installing Apache"
                 sudo apt-get install -y apache2 >/dev/null
                 echo -e "${NC}"
                 apacheinstalled=1
@@ -72,7 +77,9 @@ then
         fi
         if [ "$mysqlinstalled" -eq 0 ]
             then
-                echo -e "${CYAN}Installing MySQL Server"
+                echo -e "${YELLOW}Installing MySQL Server"
+                sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password Abcd@1234'
+                sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password Abcd@1234'
                 sudo apt-get install -y mysql-server mysql-client >/dev/null
                 echo -e "${NC}"
                 mysqlinstalled=1
