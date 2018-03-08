@@ -88,21 +88,21 @@ then
 				read rootpassword2
 				if [ "$rootpassword1" == "$rootpassword2" ]
 					then
-                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $rootpassword1'
-                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $rootpassword2'
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password "$rootpassword1"'
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password "$rootpassword1"'
                 		echo -e "Installing..."
                 	else
                 		echo -e "${YELLOW}Passwords do not match"
                 		echo -e "${YELLOW}Execute the script again"
                 		break
                 fi
-                sudo apt-get install -y mysql-server mysql-client #>/dev/null
+                sudo apt-get install -y mysql-server mysql-client >/dev/null
                 echo -e "Installed${NC}"
                 mysqlinstalled=1
         fi
         if [ "$apacheinstalled" -eq 1 ] || [ "$mysqlinstalled" -eq 1 ]
             then
-                echo -e "${YELLOW}Installing PHP"
+                echo -e "${YELLOW}Installing PHP..."
                 sudo apt-get install -y php libapache2-mod-php php-mysql >/dev/null
                 sudo service apache2 restart 
                 sudo echo "<?php" > $PHPFILE
@@ -122,9 +122,17 @@ then
        			sudo chown -R www-data:www-data /var/www/html/
        			sudo chmod -R 755 /var/www/html/
        			sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-      			sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
-      			echo -e "${CYAN}MySQL root password?"
-      			mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY 'Abcd@1234';FLUSH PRIVILEGES;EXIT;"
+      			echo -e "${CYAN}set WordPress DB  password:"
+		        read wppassword1
+        		echo -e "${CYAN}Re-Type the password:"
+        		read wppassword2
+        		if [ "$wppassword1" == "$wppassword2" ]
+        			then
+        				mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;EXIT;"
+        			else
+        				echo -e "${RED}Passwords doesn't match\nRe-run the script"
+        		fi
+        		sudo sed -i 's/database_name_here/mywp_site/g;s/username_here/wpsite_admin/g;s/password_here/$wppassword1/g' /var/www/html/wp-config.php
 			   	sudo rm /var/www/html/index.html	
       			echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
     		fi
@@ -143,19 +151,26 @@ echo -e "\n${GREEN}All required applications/services are installed and running\
 echo -n "Do you wish to add WordPress (y/n)?" 
 read wordpressinstall
 	if echo "$wordpressinstall" | grep -iq "^y";
-    then
-       	echo -e "${YELLOW}Installing WordPress"
-       	wget https://wordpress.org/latest.tar.gz
-    	tar -xzvf latest.tar.gz >/dev/null
-    	sudo rsync -av wordpress/* /var/www/html/ >/dev/null
-    	sudo chown -R www-data:www-data /var/www/html/
-    	sudo chmod -R 755 /var/www/html/
-    	sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-    	sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
-    	echo -e "${CYAN}Default password: Abcd@1234"
-    	mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY 'Abcd@1234';FLUSH PRIVILEGES;EXIT;"
-    	sudo rm /var/www/html/index.html	
-		echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
-
+        then
+    		echo -e "${YELLOW}Installing WordPress"
+    		wget https://wordpress.org/latest.tar.gz >/dev/null 2>&1
+       		tar -xzvf latest.tar.gz >/dev/null
+       		sudo rsync -av wordpress/* /var/www/html/ >/dev/null
+       		sudo chown -R www-data:www-data /var/www/html/
+       		sudo chmod -R 755 /var/www/html/
+       		sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+      		echo -e "${CYAN}set WordPress DB  password:"
+			read wppassword1
+        	echo -e "${CYAN}Re-Type the password:"
+        	read wppassword2
+        if [ "$wppassword1" == "$wppassword2" ]
+        	then
+        		mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;EXIT;"
+        	else
+        		echo -e "${RED}Passwords doesn't match\nRe-run the script"
+        fi
+        sudo sed -i 's/database_name_here/mywp_site/g;s/username_here/wpsite_admin/g;s/password_here/$wppassword1/g' /var/www/html/wp-config.php
+		sudo rm /var/www/html/index.html	
+    	echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
     fi
 fi
