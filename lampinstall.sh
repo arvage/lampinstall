@@ -97,19 +97,23 @@ then
                 sudo echo "phpinfo();" >> $PHPFILE
                 sudo echo "?>" >> $PHPFILE
                 echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/info.php ${NC}now.\n"
-                echo -n "Do you wish to add WordPress (y/n)?" 
-				read wordpressinstall
-					if echo "$wordpressinstall" | grep -iq "^y";
-        			then
-    	   				wget https://wordpress.org/latest.tar.gz 
-       					tar -xzvf latest.tar.gz >/dev/null
-       					sudo rsync -av wordpress/* /var/www/html/
-       					sudo chown -R www-data:www-data /var/www/html/
-       					sudo chmod -R 755 /var/www/html/
-       					sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-      					sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
-      					echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
-    				fi
+
+## Installing Wordpress				
+		echo -n "Do you wish to add WordPress (y/n)?" 
+		read wordpressinstall
+			if echo "$wordpressinstall" | grep -iq "^y";
+        	then
+    			echo -e "${YELLOW}Installing WordPress"
+    	   		wget https://wordpress.org/latest.tar.gz >/dev/null 
+       			tar -xzvf latest.tar.gz >/dev/null
+       			sudo rsync -av wordpress/* /var/www/html/ >/dev/null
+       			sudo chown -R www-data:www-data /var/www/html/
+       			sudo chmod -R 755 /var/www/html/
+       			sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+      			sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
+			   	sudo rm /var/www/html/index.html	
+      			echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
+    		fi
     	fi
     fi
 else
@@ -120,18 +124,21 @@ echo -e "Memory: $MEM"
 echo -e "Machine IP: $IP"
 echo -e "Hostname: $HOST ${NC}\n"
 echo -e "\n${GREEN}All required applications/services are installed and running\n\n${NC}"
+
+## Installing Wordpress
 echo -n "Do you wish to add WordPress (y/n)?" 
 read wordpressinstall
 	if echo "$wordpressinstall" | grep -iq "^y";
     then
-       	wget https://wordpress.org/latest.tar.gz
+       	echo -e "${YELLOW}Installing WordPress"
+       	wget https://wordpress.org/latest.tar.gz >/dev/null
     	tar -xzvf latest.tar.gz >/dev/null
-    	sudo rsync -av wordpress/* /var/www/html/
+    	sudo rsync -av wordpress/* /var/www/html/ >/dev/null
     	sudo chown -R www-data:www-data /var/www/html/
     	sudo chmod -R 755 /var/www/html/
     	sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
     	sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
-    	sudo rm /var/www/html/index.html
+    	sudo rm /var/www/html/index.html	
 		echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
 
     fi
