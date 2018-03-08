@@ -82,8 +82,19 @@ then
         if [ "$mysqlinstalled" -eq 0 ]
             then
                 echo -e "${YELLOW}Installing MySQL Server"
-                sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password Abcd@1234'
-                sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password Abcd@1234'
+                echo -e "${YELLOW}Enter new root password:"
+                read rootpassword1
+				echo -e "${YELLOW}Enter root password again:"
+				read rootpassword2
+				if [ "$rootpassword1" == "$rootpassword2" ]
+					then
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password "$rootpassword"'
+                		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again "$rootpassword"'
+                	else
+                		echo -e "${YELLOW}Passwords do not match"
+                		echo -e "${YELLOW}Execute the script again"
+                		break;;
+                fi
                 sudo apt-get install -y mysql-server mysql-client >/dev/null
                 echo -e "${NC}"
                 mysqlinstalled=1
@@ -111,7 +122,7 @@ then
        			sudo chmod -R 755 /var/www/html/
        			sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
       			sudo sed -i 's/database_name_here/wordpress/g;s/username_here/root/g;s/password_here/Abcd@1234/g' /var/www/html/wp-config.php
-      			echo -e "${CYAN}Default password: Abcd@1234"
+      			echo -e "${CYAN}MySQL root password?"
       			mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY 'Abcd@1234';FLUSH PRIVILEGES;EXIT;"
 			   	sudo rm /var/www/html/index.html	
       			echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
