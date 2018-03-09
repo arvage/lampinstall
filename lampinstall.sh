@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ## setting color values
-RED='\033[0;31m'
 NC='\033[0m'
+RED='\033[0;31m'
 BLUE='\033[1;34m'
 PURPLE='\033[1;35m'
 CYAN='\033[0;36m'
@@ -83,10 +83,8 @@ then
             then
                 echo -e "${YELLOW}Installing MySQL Server..."
                 sudo DEBIAN_FRONTEND=noninteractive apt-get install -q -y mysql-server mysql-client >/dev/null
-                echo -e "${YELLOW}Enter new root password:"
-                read rootpassword1
-				echo -e "${YELLOW}Enter root password again:"
-				read rootpassword2
+                read -p "Enter new root password:" rootpassword1
+				read -p "Enter root password again:" rootpassword2
 				if [ "$rootpassword1" == "$rootpassword2" ]
 					then
                 		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password "$rootpassword1"'
@@ -111,8 +109,7 @@ then
                 echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/info.php ${NC}now.\n"
 
 ## Installing Wordpress				
-		echo -n "Do you wish to add WordPress (y/n)?" 
-		read wordpressinstall
+		read -p "Do you wish to add WordPress (y/n)?" wordpressinstall
 			if echo "$wordpressinstall" | grep -iq "^y";
         	then
     			echo -e "${YELLOW}Installing WordPress..."
@@ -122,10 +119,8 @@ then
        			sudo chown -R www-data:www-data /var/www/html/
        			sudo chmod -R 755 /var/www/html/
        			sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-      			echo -e "${CYAN}set WordPress DB password:"
-		        read wppassword1
-        		echo -e "${CYAN}Re-Type the password:"
-        		read wppassword2
+		        read -p "set WordPress DB password:" wppassword1
+        		read -p "Re-Type the password:" wppassword2
         		if [ "$wppassword1" == "$wppassword2" ]
         			then
         				echo -e "${RED}MySQL Root Password?"
@@ -133,9 +128,9 @@ then
         			else
         				echo -e "${RED}Passwords doesn't match\nRe-run the script"
         		fi
-        		sudo sed -i 's/database_name_here/mywp_site/g;s/username_here/wpsite_admin/g;s/password_here/$wppassword1/g' /var/www/html/wp-config.php
-			   	sudo rm /var/www/html/index.html	
-      			echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
+        		sudo sed -i "s/database_name_here/mywp_site/g;s/username_here/wpsite_admin/g;s/password_here/$wppassword1/g" /var/www/html/wp-config.php
+			   	sudo rm /var/www/html/index.html >/dev/null 2>&1	
+      			echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/ ${NC}now.\n"
     		fi
     	fi
     fi
@@ -149,8 +144,7 @@ echo -e "Hostname: $HOST ${NC}\n"
 echo -e "\n${GREEN}All required applications/services are installed and running\n\n${NC}"
 
 ## Installing Wordpress
-echo -n "Do you wish to add WordPress (y/n)?" 
-read wordpressinstall
+read -p "Do you wish to add WordPress (y/n)?" wordpressinstall
 	if echo "$wordpressinstall" | grep -iq "^y";
         then
     		echo -e "${YELLOW}Installing WordPress..."
@@ -160,10 +154,8 @@ read wordpressinstall
        		sudo chown -R www-data:www-data /var/www/html/
        		sudo chmod -R 755 /var/www/html/
        		sudo mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-      		echo -e "${CYAN}set WordPress DB password:"
-			read wppassword1
-        	echo -e "${CYAN}Re-Type the password:"
-        	read wppassword2
+			read -p "set WordPress DB password:" wppassword1
+        	read -p "Re-Type the password:" wppassword2
         if [ "$wppassword1" == "$wppassword2" ]
         	then
         		echo -e "${RED}MySQL Root Password?"
@@ -172,7 +164,7 @@ read wordpressinstall
         		echo -e "${RED}Passwords doesn't match\nRe-run the script"
         fi
         sudo sed -i "s/database_name_here/mywp_site/g;s/username_here/wpsite_admin/g;s/password_here/$wppassword1/g" /var/www/html/wp-config.php
-		sudo rm /var/www/html/index.html	
-    	echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
+		sudo rm /var/www/html/index.html >/dev/null 2>&1
+    	echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/ ${NC}now.\n"
     fi
 fi
