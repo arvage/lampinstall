@@ -20,7 +20,7 @@ APACHE=$(service apache2 status | grep active | awk '{print $2}')
 MYSQL=$(service mysql status | grep active | awk '{print $2}')
 PHPFILE="/var/www/html/info.php"
 
-clear; echo -e "${PURPLE}LAMP Installer Script Created by Armin.G 2018\n***** NOTE: This script needs to run under root permission *****${NC}\n\n"
+clear; echo -e "${PURPLE}LAMP & WordPress Installer Script Created by Armin.G 2018\n***** NOTE: This script needs to run under root permission *****${NC}\n\n"
 echo -e "System Info:"
 echo -e "${GREEN}CPU: $CPU"
 echo -e "Memory: $MEM"
@@ -123,8 +123,8 @@ then
         		read -p "Re-Type the password:" wppassword2
         		if [ "$wppassword1" == "$wppassword2" ]
         			then
-        				echo -e "${RED}MySQL Root Password?"
-        				mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
+        				#echo -e "${RED}MySQL Root Password?"
+        				mysql -u root -e "CREATE DATABASE IF NOT EXISTS mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
         			else
         				echo -e "${RED}Passwords doesn't match\nRe-run the script"
         		fi
@@ -158,8 +158,8 @@ read -p "Do you wish to add WordPress (y/n)?" wordpressinstall
         	read -p "Re-Type the password:" wppassword2
         if [ "$wppassword1" == "$wppassword2" ]
         	then
-        		echo -e "${RED}MySQL Root Password?"
-        		mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
+        		#echo -e "${RED}MySQL Root Password?"
+        		mysql -u root -e "CREATE DATABASE IF NOT EXISTS mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
         	else
         		echo -e "${RED}Passwords doesn't match\nRe-run the script"
         fi
