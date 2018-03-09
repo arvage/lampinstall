@@ -82,9 +82,8 @@ then
         if [ "$mysqlinstalled" -eq 0 ]
             then
                 echo -e "${YELLOW}Installing MySQL Server..."
+                sudo DEBIAN_FRONTEND=noninteractive apt-get install -q -y mysql-server mysql-client >/dev/null
                 echo -e "${YELLOW}Enter new root password:"
-                export DEBIAN_FRONTEND=noninteractive
-                sudo apt-get install -q -y mysql-server mysql-client >/dev/null
                 read rootpassword1
 				echo -e "${YELLOW}Enter root password again:"
 				read rootpassword2
@@ -98,8 +97,6 @@ then
                 		echo -e "${YELLOW}Execute the script again"
                 		break
                 fi
-                export DEBIAN_FRONTEND=noninteractive
-                sudo apt-get install -q -y mysql-server mysql-client >/dev/null
                 echo -e "Installed\n${NC}"
                 mysqlinstalled=1
         fi
