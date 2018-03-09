@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 ## Gathering info
 CPU=$(lscpu | grep -i "model name" | cut -d: -f2 | sed 's/ //g')
 MEM=$(lsmem | grep -i "total online memory" | awk '{print $4}')
-IP=$(ifconfig | grep inet | awk '{print $2; exit}')
+IP=$(ifconfig | grep inet | awk '{print $2; exit}' | sed 's/addr://g')
 HOST=$(hostname)
 
 ## checking service status
@@ -68,7 +68,7 @@ then
     echo -e "${YELLOW}\n\nExited without any changes${NC}"
     else
         echo -e "${YELLOW}\nChecking and applying updates..."
-        sudo apt-get update >/dev/null && sudo apt-get dist-upgrade -y >/dev/null && sudo apt-get autoremove -y >/dev/null
+        sudo apt-get update >/dev/null #&& sudo apt-get dist-upgrade -y >/dev/null && sudo apt-get autoremove -y >/dev/null
         echo -e "${NC}"
         if [ "$apacheinstalled" -eq 0 ]
             then
