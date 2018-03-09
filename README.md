@@ -1,5 +1,5 @@
 # lampinstall
-This is an automated script to install Apache, Mysql and PHP on Ubuntu 17
+This is an automated script to install Apache, Mysql, PHP and WordPress on Ubuntu 17
 
 Instructions:
 
@@ -11,12 +11,12 @@ sudo su
 
 git clone https://github.com/arvage/lampinstall
 
-3- go to downloaded directory and make the file executable
+3- go to downloaded directory and make the install.sh file executable
 
 cd lampinstall
 
-chmod +x lampinstall.sh  
+chmod +x install.sh  
 
-4- run the script
+4- run the script and follow the on-screen prompts
 
-./lampinstall.sh
+./install.sh
