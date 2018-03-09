@@ -75,7 +75,7 @@ then
                 echo -e "${YELLOW}Installing Apache..."
                 sudo apt-get install -y apache2 >/dev/null
                 sudo systemctl enable apache2 >/dev/null 2>&1
-                echo -e "Installed${NC}"
+                echo -e "Installed\n${NC}"
                 apacheinstalled=1
 
         fi
@@ -91,7 +91,6 @@ then
 					then
                 		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password "$rootpassword1"'
                 		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password "$rootpassword1"'
-                		echo -e "Installing..."
                 	else
                 		echo -e "${YELLOW}Passwords do not match"
                 		echo -e "${YELLOW}Execute the script again"
@@ -108,6 +107,7 @@ then
                 sudo echo "<?php" > $PHPFILE
                 sudo echo "phpinfo();" >> $PHPFILE
                 sudo echo "?>" >> $PHPFILE
+                echo -e "Installed\n${NC}"
                 echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/info.php ${NC}now.\n"
 
 ## Installing Wordpress				
@@ -129,7 +129,7 @@ then
         		if [ "$wppassword1" == "$wppassword2" ]
         			then
         				echo -e "${RED}MySQL Root Password?"
-        				mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;EXIT;"
+        				mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
         			else
         				echo -e "${RED}Passwords doesn't match\nRe-run the script"
         		fi
@@ -167,11 +167,11 @@ read wordpressinstall
         if [ "$wppassword1" == "$wppassword2" ]
         	then
         		echo -e "${RED}MySQL Root Password?"
-        		mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;EXIT;"
+        		mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
         	else
         		echo -e "${RED}Passwords doesn't match\nRe-run the script"
         fi
-        sudo sed -i 's/database_name_here/mywp_site/g;s/username_here/wpsite_admin/g;s/password_here/$wppassword1/g' /var/www/html/wp-config.php
+        sudo sed -i "s/database_name_here/mywp_site/g;s/username_here/wpsite_admin/g;s/password_here/$wppassword1/g" /var/www/html/wp-config.php
 		sudo rm /var/www/html/index.html	
     	echo -e "${NC}\n\nYou should be able to browse into ${GREEN}http://$IP/index.php ${NC}now.\n"
     fi
