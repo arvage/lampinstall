@@ -124,7 +124,7 @@ then
         		if [ "$wppassword1" == "$wppassword2" ]
         			then
         				echo -e "${RED}MySQL Root Password?"
-        				mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
+        				mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
         			else
         				echo -e "${RED}Passwords doesn't match\nRe-run the script"
         		fi
@@ -159,7 +159,7 @@ read -p "Do you wish to add WordPress (y/n)?" wordpressinstall
         if [ "$wppassword1" == "$wppassword2" ]
         	then
         		echo -e "${RED}MySQL Root Password?"
-        		mysql -u root -p -e "CREATE DATABASE mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
+        		mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS mywp_site;GRANT ALL PRIVILEGES ON mywp_site.* TO 'wpsite_admin'@'localhost' IDENTIFIED BY '$wppassword1';FLUSH PRIVILEGES;"
         	else
         		echo -e "${RED}Passwords doesn't match\nRe-run the script"
         fi
