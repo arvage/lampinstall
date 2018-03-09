@@ -20,5 +20,3 @@ chmod +x lampinstall.sh
 4- run the script
 
 ./lampinstall.sh
-
-***The MySQL temp root password is Abcd@1234 and you need to change it before going into production.
