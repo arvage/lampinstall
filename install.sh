@@ -143,7 +143,7 @@ echo -e "Machine IP: $IP"
 echo -e "Hostname: $HOST ${NC}\n"
 echo -e "\n${GREEN}All required applications/services are installed and running\n\n${NC}"
 
-## Installing Wordpress
+## Installing Wordpress if Apache and MySQL already installed
 read -p "Do you wish to add WordPress (y/n)?" wordpressinstall
 	if echo "$wordpressinstall" | grep -iq "^y";
         then
