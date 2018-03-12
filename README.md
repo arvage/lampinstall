@@ -1,5 +1,5 @@
 # lampinstall
-This is an automated script to install Apache, Mysql, PHP and WordPress on Ubuntu 17
+This is an automated script to install Apache, Mysql, PHP and WordPress on Ubuntu 16 & 17
 
 Instructions:
 
